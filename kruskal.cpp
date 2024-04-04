@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
-#include<bits/stdc++.h>
+#include <algorithm>
+#include <string>
 using namespace std;
 class Edge{
     int start;
@@ -61,22 +62,7 @@ class Graph
     }
     int kruskal()
     {
-        int totalWeight=0;
-        Edge current = v1.front();
-        vector<int>visited;
-        while(!v1.empty())
-        {
-            if(find(v1.begin(), v1.end(), current.start)!=v1.end()+1 && find(v1.begin(), v1.end(), current.end)!=v1.end()+1)
-            {
-                totalWeight += current.weight;
-                visited.push_back(current.start);
-                visited.push_back(current.end);
-            }
-            
-            v1.pop_back();
-            current = v1.front();
-        }
-        return totalWeight;
+        return 0;
     }
     
 };
@@ -89,6 +75,7 @@ int main()
     Graph g1(n);
     g1.displayEdges();
     g1.sortEdges();
+    cout<<"After sorting\n";
     g1.displayEdges();
     return 0;
 }
