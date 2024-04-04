@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <string>
 using namespace std;
+
 class Edge{
     int start;
     int end;
@@ -29,6 +30,7 @@ class Graph
     int n;
     vector<Edge>v1;
     vector<Edge>sorted;
+    vector<int>visited;
     public:
     Graph()
     {
@@ -46,7 +48,7 @@ class Graph
     }
     void displayEdges()
     {
-        for(int j=0; j<n; j++)
+        for(int j=0; j<v1.size(); j++)
         {
             Edge temp = v1[j];
             cout<<temp.start<<"---"<<temp.weight<<"---"<<temp.end<<endl;
@@ -60,11 +62,41 @@ class Graph
     {
         sort(v1.begin(), v1.end(), compareWeights);
     }
+    bool isVisited(int vertex)
+    {
+        for(int j=0; j<visited.size(); j++)
+        {
+            if(visited[j]==vertex)
+            return true;
+        }
+        return false;
+    }
     int kruskal()
     {
-        return 0;
+        int totalWeight = 0;
+        for(int i=0; i<n; i++)
+        {
+            if(visited.size()==n)
+            break;
+            Edge temp = v1.front();
+            v1.erase(v1.begin());
+            // cout<<"\nUPDATED EDGE LIST\n";
+            // displayEdges();
+            bool startvisited = isVisited(temp.start);
+            bool endvisited = isVisited(temp.end);
+            if(startvisited && endvisited)
+                continue;
+            else
+            {
+                if(!startvisited)
+                visited.push_back(temp.start);
+                if(!endvisited)
+                visited.push_back(temp.end);
+                totalWeight+=temp.weight;
+            }
+        }
+        return totalWeight;
     }
-    
 };
 
 int main()
@@ -75,7 +107,11 @@ int main()
     Graph g1(n);
     g1.displayEdges();
     g1.sortEdges();
+    
     cout<<"After sorting\n";
     g1.displayEdges();
+
+    int result = g1.kruskal();
+    cout<<endl<<result;
     return 0;
 }
